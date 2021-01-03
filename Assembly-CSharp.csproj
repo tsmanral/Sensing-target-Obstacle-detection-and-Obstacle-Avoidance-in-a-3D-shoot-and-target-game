@@ -76,7 +76,8 @@
      <Compile Include="Assets\Cinemachine Example Scenes\Shared\Scripts\PlayerMovePhysics.cs" />
      <Compile Include="Assets\Cinemachine Example Scenes\Shared\Scripts\SpawnInCircle.cs" />
      <Compile Include="Assets\Scripts\ball.cs" />
-     <Compile Include="Assets\Scripts\ballmovement.cs" />
+     <Compile Include="Assets\Scripts\BallControl.cs" />
+     <Compile Include="Assets\Scripts\BallMovement.cs" />
      <Compile Include="Assets\Scripts\ballproject.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\PlaneMovement.cs" />

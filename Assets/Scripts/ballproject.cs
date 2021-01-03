@@ -11,7 +11,7 @@ public class ballproject : MonoBehaviour
         
     }
 
-    void Update() {
+    void MoveBall() {
         if (Input.GetMouseButtonDown(0))
         {
             GameObject projectile = Instantiate(prefab) as GameObject;
