@@ -75,12 +75,13 @@
      <Compile Include="Assets\Cinemachine Example Scenes\Shared\Scripts\PlayerMoveOnSphere.cs" />
      <Compile Include="Assets\Cinemachine Example Scenes\Shared\Scripts\PlayerMovePhysics.cs" />
      <Compile Include="Assets\Cinemachine Example Scenes\Shared\Scripts\SpawnInCircle.cs" />
-     <Compile Include="Assets\Scripts\ball.cs" />
      <Compile Include="Assets\Scripts\BallControl.cs" />
      <Compile Include="Assets\Scripts\BallMovement.cs" />
      <Compile Include="Assets\Scripts\ballproject.cs" />
+     <Compile Include="Assets\Scripts\BallStorage.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\PlaneMovement.cs" />
+     <Compile Include="Assets\Scripts\StateManager.cs" />
      <None Include="Assets\Cinemachine Example Scenes\Scenes\Anywhere Door\ScreenCutoutShader.shader" />
  <Reference Include="Cinemachine">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Cinemachine.dll</HintPath>

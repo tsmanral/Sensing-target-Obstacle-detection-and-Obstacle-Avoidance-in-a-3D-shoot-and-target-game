@@ -4,43 +4,57 @@ using UnityEngine;
 
 public class BallControl : MonoBehaviour
 {
-    float xRot, yRot = 0f;
-
-    public Rigidbody ball;
     
+    public float moveSpeed = 10f;
+
     private Renderer rend;
     private Light myLight;
 
-    public float rotationSpeed = 5f;
+    public Vector3 velocity = Vector3.zero * 0.1f;
+    float smoothtime = 0.25f;
 
-    public float shootPower =  30f; 
- 
+    float shootPower = 40f;
 
+    StateManager theStateManager;
 
     // Start is called before the first frame update
     void Start()
     {
+        theStateManager = GameObject.FindObjectOfType<StateManager>();
+
+
+        //for (int i = 0; i < storedBalls.transform.childCount; i++)
+        //{
+            //ball = GameObject.FindObjectOfType<BallStorage>().GetChild(0);
+        //}
+
         rend = GetComponent<Renderer>();
-        myLight = GetComponent<Light>();         
+        myLight = GetComponent<Light>();
     }
 
-    // Update is called once per frame
-    void Update()
+    void Update ()
     {
-        transform.position = ball.position;
+        float inputX = Input.GetAxis("Horizontal");
+        float inputZ = Input.GetAxis("Vertical");
+
+        float moveX = inputX*moveSpeed*Time.deltaTime;
+        float moveZ = inputZ*moveSpeed*Time.deltaTime;
 
         if(Input.GetMouseButton(0))
         {
-            xRot += Input.GetAxis("Mouse X") * rotationSpeed;
-            yRot += Input.GetAxis("Mouse Y") * rotationSpeed;
-            transform.rotation = Quaternion.Euler(yRot, xRot, 0f);
-        }
+            this.transform.position = transform.position + Camera.main.transform.forward * 2;
+            this.velocity = Camera.main.transform.forward * shootPower; 
+            
+            //this.GetComponent<Rigidbody> ().AddForce (Vector3.left * 10000.0f);
+            
+            /*this.transform.position = Vector3.SmoothDamp(
+                this.transform.position, 
+                new Vector3(transform.position.x + cameraTransform.forward.x * 2, transform.position.y + cameraTransform.forward.y * 2, transform.position.z + cameraTransform.forward.z * 2), 
+                ref velocity,
+                smoothtime);
+            */
 
-        if(Input.GetMouseButtonUp(0))
-        {
-            ball.velocity = Camera.main.transform.forward * shootPower;
         }
-        
     }
 
     void OnCollisionEnter(Collision col)
