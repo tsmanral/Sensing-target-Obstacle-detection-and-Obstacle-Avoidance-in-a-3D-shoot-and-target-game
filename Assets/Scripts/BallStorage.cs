@@ -10,7 +10,7 @@ public class BallStorage : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         for (int i = 0; i < this.transform.childCount; i++)
         {
@@ -39,7 +39,7 @@ public class BallStorage : MonoBehaviour
 
             if(thePlaceholder==null)
             {
-                Debug.LogError("We're trying to add a stone but we don't have empty places. How did this happen?!?!?");
+                Debug.LogError("We're trying to add a ball but we don't have empty places.");
                 return;
             }
         }

@@ -7,6 +7,7 @@ public class StateManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        goal = GameObject.FindObjectOfType<GoalManager>();
     }
 
     public int NumberOfPlayers = 2;
@@ -14,6 +15,10 @@ public class StateManager : MonoBehaviour
 
     public bool IsDoneClicking = false;
     public bool IsDoneAnimating = false;
+
+    GoalManager goal;
+
+    CameraController controlledCamera; 
 
     public void NewTurn()
     {
@@ -29,10 +34,18 @@ public class StateManager : MonoBehaviour
     {
         
         // Is the turn done?
-        if(IsDoneClicking && IsDoneAnimating)
+        if(IsDoneClicking && IsDoneAnimating && !goal.isGoal)
         {
             Debug.Log("Turn is done!");
             NewTurn();
+        }
+        else if(IsDoneClicking && IsDoneAnimating && goal.isGoal)
+        {
+            goal.GameComplete(CurrentPlayerId);
+            goal.isGoal = false;
+            foreach (GameObject o in Object.FindObjectsOfType<GameObject>()) {
+                Destroy(o);
+            } 
         }
     }
 }

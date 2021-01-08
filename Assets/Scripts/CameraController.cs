@@ -12,18 +12,34 @@ public class CameraController : MonoBehaviour
 
     public Transform Obstruction;
     float zoomSpeed = 2f;
+
+    StateManager theStateManager;
+
+    BallStorage storedBalls;
     
     void Start()
     {
         Obstruction = Target;
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
+
+        theStateManager = FindObjectOfType<StateManager>();
+        storedBalls = FindObjectOfType<BallStorage>();
     }
 
     private void LateUpdate()
     {
         CamControl();
         ViewObstructed();
+
+        if(theStateManager.CurrentPlayerId == 1)
+        {
+            Player = storedBalls.transform.GetChild(1);
+        }
+        else
+        {
+            Player = storedBalls.transform.GetChild(0);
+        }
     }
     
 
