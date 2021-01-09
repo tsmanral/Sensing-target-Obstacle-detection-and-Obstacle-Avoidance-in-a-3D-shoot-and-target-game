@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class GoalManager : MonoBehaviour
-{
-    public bool isGoal = false;
+{    
+    
+    StateManager theStateManager;
     
     // Start is called before the first frame update
     void Start()
     {
-
+        theStateManager = GameObject.FindObjectOfType<StateManager>();
     }
 
     // Update is called once per frame
-    public void GameComplete(int CurrentPlayerId)
+    public void ShowWinner()
     {
-        Debug.Log("Goal! by" + CurrentPlayerId);
+        if(theStateManager.IsGoal)
+        {
+
+        }
     }
 }

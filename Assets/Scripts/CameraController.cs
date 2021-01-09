@@ -7,7 +7,8 @@ public class CameraController : MonoBehaviour
 {
     
     float rotationSpeed = 1;
-    public Transform Target, Player;
+    public Transform Target;
+    private Transform Player;
     float mouseX, mouseY;
 
     public Transform Obstruction;
@@ -51,15 +52,7 @@ public class CameraController : MonoBehaviour
 
         transform.LookAt(Target);
 
-        if (Input.GetKey(KeyCode.LeftShift))
-        {
-            Target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
-        }
-        else
-        {
-            Target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
-            Player.rotation = Quaternion.Euler(0, mouseX, 0);
-        }
+        Target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
     }
     
 

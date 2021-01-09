@@ -16,14 +16,15 @@ public class BallControl : MonoBehaviour
 
     float shootPower = 40f;
 
-    GoalManager goal;
+
+    StateManager theStateManager;
 
     // Start is called before the first frame update
     void Start()
     {
         rend = GetComponent<Renderer>();
         myLight = GetComponent<Light>();
-        goal = GameObject.FindObjectOfType<GoalManager>();
+        theStateManager = GameObject.FindObjectOfType<StateManager>();
     }
 
     public void ThrowBall (Rigidbody ball)
@@ -39,42 +40,45 @@ public class BallControl : MonoBehaviour
         // ball.velocity = Camera.main.transform.forward * shootPower; 
             
         ball.AddForce(Camera.main.transform.forward * shootPower , ForceMode.VelocityChange);
+
+        // TODO:  Animating part
+        theStateManager.IsDoneAnimating = true;
     }
 
     void OnCollisionEnter(Collision col)
     {
         // col = col.contacts[0]; 
-        //print (col.collider.name);
+        print (col.collider.name);
         if(col.collider.name == "GoalManager")
         {
-            goal.isGoal = true;
+            theStateManager.IsGoal = true;
         }
-        else if(col.collider.name == "wallLeft")
+        else if(col.collider.name == "Ground")
         {
             rend.material.color = Color.blue;
             myLight.color = Color.blue;
         }
-        else if(col.collider.name == "wallRight")
+        else if(col.collider.name == "Roof")
         {
             rend.material.color = Color.red;
             myLight.color = Color.red;
         }
-        else if(col.collider.name == "wallFront")
+        else if(col.collider.name == "Wall 0")
         {
             rend.material.color = Color.green;
             myLight.color = Color.green;
         }
-        else if(col.collider.name == "wallBack")
+        else if(col.collider.name == "Wall 1")
         {
             rend.material.color = Color.yellow;
             myLight.color = Color.yellow;
         }
-        else if(col.collider.name == "floor")
+        else if(col.collider.name == "Wall 2")
         {
             rend.material.color = Color.magenta;
             myLight.color = Color.magenta;
         }
-        else if(col.collider.name == "ceiling")
+        else if(col.collider.name == "Wall 3")
         {
             rend.material.color = Color.black;
             myLight.color = Color.black;

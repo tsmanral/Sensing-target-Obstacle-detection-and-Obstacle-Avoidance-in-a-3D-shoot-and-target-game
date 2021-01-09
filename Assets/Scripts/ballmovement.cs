@@ -35,7 +35,6 @@ public class BallMovement : MonoBehaviour
             
             controlBall.ThrowBall(storedBalls.transform.GetChild(theStateManager.CurrentPlayerId).GetComponentInChildren<Rigidbody>());
             theStateManager.IsDoneClicking = true;
-            theStateManager.IsDoneAnimating = true;
         }  
     }
 }
