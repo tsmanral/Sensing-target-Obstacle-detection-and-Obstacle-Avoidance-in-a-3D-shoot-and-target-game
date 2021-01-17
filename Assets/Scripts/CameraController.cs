@@ -1,81 +1,51 @@
-﻿using System.Collections;
-    
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class CameraController : MonoBehaviour
-{
-    
-    float rotationSpeed = 1;
-    public Transform Target;
-    private Transform Player;
-    float mouseX, mouseY;
+public class CameraController : MonoBehaviour{
+    public Transform pivot;
+    public float sensitivity = 10f;
 
-    public Transform Obstruction;
-    float zoomSpeed = 2f;
+    public bool autoRotate = false;
 
-    StateManager theStateManager;
+    bool move = false;
+    bool moveClock = false;
+    float offset = 0f;
 
-    BallStorage storedBalls;
-    
-    void Start()
-    {
-        Obstruction = Target;
-        Cursor.visible = false;
-        Cursor.lockState = CursorLockMode.Locked;
+    void Update(){
+        move = Input.GetMouseButton(1);
+        offset = Input.GetAxis("Mouse X");
 
-        theStateManager = FindObjectOfType<StateManager>();
-        storedBalls = FindObjectOfType<BallStorage>();
-    }
-
-    private void LateUpdate()
-    {
-        CamControl();
-        ViewObstructed();
-
-        if(theStateManager.CurrentPlayerId == 1)
-        {
-            Player = storedBalls.transform.GetChild(1);
-        }
-        else
-        {
-            Player = storedBalls.transform.GetChild(0);
-        }
-    }
-    
-
-    void CamControl()
-    {
-        mouseX += Input.GetAxis("Mouse X") * rotationSpeed;
-        mouseY -= Input.GetAxis("Mouse Y") * rotationSpeed;
-        mouseY = Mathf.Clamp(mouseY, -35, 60);
-
-        transform.LookAt(Target);
-
-        Target.rotation = Quaternion.Euler(mouseY, mouseX, 0);
-    }
-    
-
-    void ViewObstructed()
-    {
-        RaycastHit hit;
-
-        if (Physics.Raycast(transform.position, Target.position - transform.position, out hit, 4.5f))
-        {
-            if (hit.collider.gameObject.tag != "Player")
+        if(autoRotate){
+            if(move == true)
             {
-                Obstruction = hit.transform;
-                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.ShadowsOnly;
-                
-                if(Vector3.Distance(Obstruction.position, transform.position) >= 3f && Vector3.Distance(transform.position, Target.position) >= 1.5f)
-                    transform.Translate(Vector3.forward * zoomSpeed * Time.deltaTime);
+                moveClock = true;
+                move = false;
             }
             else
             {
-                Obstruction.gameObject.GetComponent<MeshRenderer>().shadowCastingMode = UnityEngine.Rendering.ShadowCastingMode.On;
-                if (Vector3.Distance(transform.position, Target.position) < 4.5f)
-                    transform.Translate(Vector3.back * zoomSpeed * Time.deltaTime);
+                move = true;
+                moveClock = false;
             }
+            offset = 0.5f;
+        }
+        if(Input.GetKeyUp(KeyCode.C))
+        {
+            if(!autoRotate)
+            {
+                autoRotate = true;
+            }
+            else
+            {
+                autoRotate = false;
+            }
+        }
+    }
+
+    void LateUpdate (){
+        if(move){
+            transform.RotateAround(pivot.position, Vector3.up, offset * sensitivity * Time.deltaTime);
+        }
+        if(moveClock){
+            transform.RotateAround(pivot.position, Vector3.down, offset * sensitivity * Time.deltaTime);
         }
     }
 }
