@@ -15,6 +15,18 @@ The goal is to train an agent which can detect and avoid obstacles inside a poly
 #### Step 1:
 Create a GUI for the game : Completed
 
+#### Step 2:
+Develop metrics for the game : Completed
+
+#### Step 3:
+Make the game human playable : Completed
+
+#### Step 4:
+Add the AI Component : Working
+
+#### Step 5:
+Evaluate the Performance : Incomplete 
+
 
 
 
