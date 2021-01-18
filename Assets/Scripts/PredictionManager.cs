@@ -88,10 +88,12 @@ public class PredictionManager : Singleton<PredictionManager>{
                 Collider[] hits = Physics.OverlapSphere(p, 0);
                 foreach (var hitCollider in hits)
                 {
-                    if(hitCollider.name == "Goal(Clone)")
+                    if(hitCollider.tag == "Goal")
                     {
-                        FindObjectOfType<Shooter>().rotationSpeed = 0;
+                        StateManager.instance.player.GetComponent<Shooter>().rotationSpeed = 0;
+                        //FindObjectOfType<Shooter>().rotationSpeed = 0;
                         lineRenderer.material = mat2;
+                        break;
                     }
                 } 
             }

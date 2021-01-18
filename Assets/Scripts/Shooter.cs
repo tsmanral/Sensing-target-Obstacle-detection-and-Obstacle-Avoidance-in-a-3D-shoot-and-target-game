@@ -10,9 +10,11 @@ public class Shooter : MonoBehaviour{
     public GameObject ballPrefab;
     public float power;
     public float rotationSpeed;
+    public bool isCounting = false;
 
     Vector3 currentPosition;
     Quaternion currentRotation;
+    
 
 
     void Start(){
@@ -30,20 +32,32 @@ public class Shooter : MonoBehaviour{
         ball.GetComponent<Rigidbody>().AddForce(calculateForce(), ForceMode.Impulse);
         StateManager.instance.shoot();
 
-        await WaitOneSecondAsync();
+        isCounting = true;
+
+        await WaitFiveSecondAsync();
+
+        ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+        ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+
+        await WaitTwoSecondAsync();
         
-        if(ball.GetComponent<BallPos>().isChanged == true)
-        {
-            transform.position = ball.GetComponent<BallPos>().finalPos;
-        }
-        //transform.rotation = Quaternion.identity;
-        //ball.GetComponent<BallPos>().finalPos;
+        transform.position = ball.GetComponent<BallPosition>().finalPos;
+
+        isCounting = false;
+
+        Destroy(ball);
     }
 
-    private async Task WaitOneSecondAsync()
+    private async Task WaitTwoSecondAsync()
     {
-        await Task.Delay(TimeSpan.FromSeconds(25));
-        Debug.Log("Finished waiting.");
+        await Task.Delay(TimeSpan.FromSeconds(2));
+        Debug.Log("Finished 2 sec waiting.");
+    }
+
+    private async Task WaitFiveSecondAsync()
+    {
+        await Task.Delay(TimeSpan.FromSeconds(5));
+        Debug.Log("Finished 5 sec waiting.");
     }
 
     void Update(){
@@ -67,13 +81,16 @@ public class Shooter : MonoBehaviour{
         currentRotation = transform.rotation;
 
         if(Input.GetKeyUp(KeyCode.Space)){
-            if(StateManager.instance.currentShoots.val > 0){
+            if(StateManager.instance.currentShoots.val > 0 && isCounting == false ){
                 shoot();
             }
         }
     }
 
     void predict(){
-        PredictionManager.instance.predict(ballPrefab, firePoint.transform.position, calculateForce());
+        if(isCounting == false)
+        {
+            PredictionManager.instance.predict(ballPrefab, firePoint.transform.position, calculateForce());
+        }
     }
 }

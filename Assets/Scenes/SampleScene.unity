@@ -1545,10 +1545,7 @@ MonoBehaviour:
   collectablePrefab: {fileID: 7454319565916640337, guid: bd69fef868592ed47bdd1001a02e0d39,
     type: 3}
   obstaclesRoot: {fileID: 718029291}
-  obstacles:
-  - {fileID: 5584028860196751353, guid: e2018d8c2b8345947880984655a939e6, type: 3}
-  - {fileID: 284521488691344332, guid: b288c002315706a4c9614e1e8f94903a, type: 3}
-  - {fileID: 1081014854627648589, guid: cc5e020623110aa4c96b54aa9f6a8da3, type: 3}
+  obstacle: {fileID: 284521488691344332, guid: b288c002315706a4c9614e1e8f94903a, type: 3}
   playerVolume: {x: 6, y: 6, z: 6}
   collectablesVolume: {x: 9, y: 9, z: 9}
   obstaclesVolume: {x: 10, y: 10, z: 10}
@@ -1888,8 +1885,9 @@ MonoBehaviour:
   firePoint: {fileID: 2016543158}
   ballPrefab: {fileID: 2541648754435977243, guid: 0a58b7fbc40200a489c65aa8dfda60a3,
     type: 3}
-  power: 50
-  rotationSpeed: 0.9
+  power: 60
+  rotationSpeed: 0.7
+  isCounting: 0
 --- !u!65 &8212974821391853892
 BoxCollider:
   m_ObjectHideFlags: 0

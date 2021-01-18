@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class StateManager : Singleton<StateManager>{
     public int maxScore;
@@ -11,7 +12,7 @@ public class StateManager : Singleton<StateManager>{
     public GameObject player;
     public GameObject collectablePrefab;
     public GameObject obstaclesRoot;
-    public List<GameObject> obstacles;
+    public GameObject obstacle;
     [Space]
     [Header("Spawn Area")]
     public Vector3 playerVolume;
@@ -83,7 +84,7 @@ public class StateManager : Singleton<StateManager>{
     void createObstacles(){
         int currentObs = 0;
         while(currentObs < maxObstacles){
-            GameObject o = Instantiate(obstacles[Random.Range(0, obstacles.Count)]);
+            GameObject o = Instantiate(obstacle);
             Collider oc = o.GetComponent<Collider>();
             bool empty = false;
             int iterations = 0;
@@ -100,6 +101,7 @@ public class StateManager : Singleton<StateManager>{
 
             o.transform.position = p;
             o.transform.rotation = r;
+            o.GetComponent<MeshRenderer>().material.color = Random.ColorHSV(0f, 1f, 1f, 1f, 1f, 1f);
             o.transform.SetParent(obstaclesRoot.transform);
             currentObs ++;
         }
