@@ -81,7 +81,7 @@ public class Shooter : MonoBehaviour{
         currentRotation = transform.rotation;
 
         if(Input.GetKeyUp(KeyCode.Space)){
-            if(StateManager.instance.currentShoots.val > 0 && isCounting == false ){
+            if(isCounting == false ){
                 shoot();
             }
         }

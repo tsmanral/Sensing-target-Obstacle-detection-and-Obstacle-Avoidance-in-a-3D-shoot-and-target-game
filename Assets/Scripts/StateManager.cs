@@ -6,7 +6,7 @@ using Random = UnityEngine.Random;
 
 public class StateManager : Singleton<StateManager>{
     public int maxScore;
-    public int balls;
+    //public int balls;
     public int maxObstacles;
     [Space]
     public GameObject player;
@@ -29,11 +29,10 @@ public class StateManager : Singleton<StateManager>{
     }
 
     public void shoot(){
-        currentShoots.val --;
+        currentShoots.val ++;
     }
 
     void Start(){
-        currentShoots.val = balls;
         currentScore.propertyUpdated += onScore;
         currentShoots.propertyUpdated += onShoot;
 
