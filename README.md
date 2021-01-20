@@ -8,9 +8,9 @@
 <a href="https://github.com/tsmanral" target="_blank"><img alt="Github" src="https://img.shields.io/github/followers/tsmanral.svg?style=social"></a>
 </p>
 
-<p align="center"><img width="1000" alt="GUI Ball Unity Image" src=".github/GUIBALL.png"></p>
+<p align="center"><img width="1000" alt="GUI Ball Unity Image" src="./Thumbnail.png"></p>
 
-The goal is to train an agent which can detect and avoid obstacles inside a polytope. The agent will learn the line of the shot of the ball to reach the goal in optimal steps. Utilizing Tensorflow with Reinforcement learning in Unity alongwith mlagents package to train the game.
+The goal is to train an agent that can detect and avoid obstacles inside a polytope. The agent will learn the line of the shot of the ball to reach the goal in optimal steps. Utilizing Tensorflow with Reinforcement learning in Unity along with mlagents package to train the game.
 
 #### Step 1:
 Create a GUI for the game : Completed
@@ -26,6 +26,11 @@ Add the AI Component : Working
 
 #### Step 5:
 Evaluate the Performance : Incomplete 
+
+
+#### TODO:
+1. Add Frequency while instantiating obstacles w.r.t goal every perfect hit.
+2. Add random movement to the plane.
 
 
 
