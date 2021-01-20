@@ -1,11 +1,12 @@
-﻿using UnityEngine;
+﻿using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using System;
+using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
 
-
-public class Shooter : MonoBehaviour{
+public class Shooter : Agent{
     public GameObject firePoint;
     public GameObject ballPrefab;
     public float power;
@@ -15,14 +16,20 @@ public class Shooter : MonoBehaviour{
     Vector3 currentPosition;
     Quaternion currentRotation;
     
+    private EnvironmentParameters EnvironmentParameters;
 
+    public event Action OnEnvironmentReset;
 
-    void Start(){
+    public override void Initialize(){
         currentPosition = transform.position;
         currentRotation = transform.rotation;
         predict();
+
+        StateManager.instance.currentScore.propertyUpdated += onHit;
+        EnvironmentParameters = Academy.Instance.EnvironmentParameters;
     }
 
+    
     public Vector3 calculateForce(){
         return transform.forward * power;
     }
@@ -93,4 +100,26 @@ public class Shooter : MonoBehaviour{
             PredictionManager.instance.predict(ballPrefab, firePoint.transform.position, calculateForce());
         }
     }
+
+    void onHit(int v){
+        Debug.Log("Nice Shot!!");
+    }
+
+
+    //public override void OnActionReceived(float[] vectorAction){
+
+    //}
+
+    //public override void Heuristic(float[] actionsOut){
+
+    //}
+
+    //public override void CollectObservations(VectorSensor sensor){
+
+    //}
+    
+    //public override void OnEpisodeBegin(){
+
+    //}
+
 }

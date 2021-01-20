@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
+using Unity.MLAgents;
+using Unity.MLAgents.Sensors;
 
-public class Singleton<T> : MonoBehaviour where T: MonoBehaviour{
+public class Singleton<T> : Agent where T: Agent{
     
     public static bool verbose = false;
     public bool keepAlive = false;

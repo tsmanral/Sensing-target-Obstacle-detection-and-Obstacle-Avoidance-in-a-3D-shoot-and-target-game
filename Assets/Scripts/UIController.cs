@@ -10,15 +10,11 @@ public class UIController : MonoBehaviour{
     public TextMeshProUGUI HitCard;
 
     void Start(){
-        StateManager.instance.currentShoots.propertyUpdated += onShoot;
         StateManager.instance.currentScore.propertyUpdated += onHit;
     }
 
-    void onShoot(int v){
-        ScoreCard.text = v.ToString();
-    }
-
     void onHit(int v){
+        ScoreCard.text = v.ToString();
         HitCard.text = "Nice Shot!!";
     }
 }

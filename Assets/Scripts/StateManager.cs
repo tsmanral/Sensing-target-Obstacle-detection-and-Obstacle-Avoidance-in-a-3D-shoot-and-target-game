@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
+//using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
+
 public class StateManager : Singleton<StateManager>{
-    public int maxScore;
-    //public int balls;
     public int maxObstacles;
     [Space]
     public GameObject player;
@@ -34,7 +33,6 @@ public class StateManager : Singleton<StateManager>{
 
     void Start(){
         currentScore.propertyUpdated += onScore;
-        currentShoots.propertyUpdated += onShoot;
 
         movePlayer();
         createObstacles();
@@ -42,21 +40,8 @@ public class StateManager : Singleton<StateManager>{
         PredictionManager.instance.copyAllObstacles();
     }
 
-    void Update() {  
-    }
-
-    void onShoot(int v){
-        if(v == 0){
-            lose();
-        }
-    }
-
     void onScore(int v){
-        if(v < maxScore){
-            createNewCollectable();
-        }else{
-            win();
-        }
+        createNewCollectable();
     }
 
     void movePlayer(){
@@ -112,28 +97,6 @@ public class StateManager : Singleton<StateManager>{
         p.y = Random.Range(-vol.y/2, vol.y/2);
         p.z = Random.Range(-vol.z/2, vol.z/2);
         return transform.position + transform.rotation * p;
-    }
-
-    void win(){
-        StartCoroutine(waitAndReload());
-    }
-
-    void lose(){
-        StartCoroutine(waitAndCheckForReload());
-    }
-
-    IEnumerator waitAndReload(){
-        yield return new WaitForSeconds(1);
-        Debug.Log("Won");
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
-
-    IEnumerator waitAndCheckForReload(){
-        yield return new WaitForSeconds(2);
-        if(currentScore.val < maxScore){
-            Debug.Log("Lose");
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        }
     }
 
     void OnDrawGizmos() {

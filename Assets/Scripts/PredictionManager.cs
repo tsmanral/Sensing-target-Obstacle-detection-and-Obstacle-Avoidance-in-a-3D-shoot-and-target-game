@@ -85,14 +85,14 @@ public class PredictionManager : Singleton<PredictionManager>{
                 Vector3 p = Vector3.zero;
 
                 p = lineRenderer.GetPosition(i);
-                Collider[] hits = Physics.OverlapSphere(p, 0);
+                Collider[] hits = Physics.OverlapSphere(p, 0.01f);
                 foreach (var hitCollider in hits)
                 {
                     if(hitCollider.tag == "Goal")
                     {
-                        StateManager.instance.player.GetComponent<Shooter>().rotationSpeed = 0;
-                        //FindObjectOfType<Shooter>().rotationSpeed = 0;
                         lineRenderer.material = mat2;
+                        // StateManager.instance.player.GetComponent<Shooter>().rotationSpeed = 0;
+                        i = maxIterations;
                         break;
                     }
                 } 
