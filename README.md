@@ -31,6 +31,7 @@ Evaluate the Performance : Incomplete
 #### TODO:
 1. Add Frequency while instantiating obstacles w.r.t goal every perfect hit.
 2. Add random movement to the plane.
+3. Make the game multiplayer.
 
 
 
