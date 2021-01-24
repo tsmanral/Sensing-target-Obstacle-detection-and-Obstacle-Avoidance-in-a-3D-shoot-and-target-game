@@ -1,0 +1,10 @@
+Shooter:
+  measure: reward
+  thresholds: [0.5, 0.5, 0.5, 0.5, 0.5]
+  min_lesson_length: 1000
+  signal_smoothing: true
+  parameters:
+    amountObstacle: [2, 3, 4, 5, 6, 6]
+    ObstacleSpeed: [1, 1, 1, 1, 1, 1.5]
+    shootingFrequency: [25, 25, 25, 25, 25, 25]
+

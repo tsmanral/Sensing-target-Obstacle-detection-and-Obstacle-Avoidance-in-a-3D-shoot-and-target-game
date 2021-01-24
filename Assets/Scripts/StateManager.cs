@@ -21,6 +21,8 @@ public class StateManager : Singleton<StateManager>{
     public Observable<int> currentScore = new Observable<int>(0);
     public Observable<int> currentShoots = new Observable<int>(0);
 
+    public Observable<int> currentMiss = new Observable<int>(0);
+
     int maxIterationsSpawn = 10;
 
     public void addPoint(){
@@ -29,6 +31,7 @@ public class StateManager : Singleton<StateManager>{
 
     public void shoot(){
         currentShoots.val ++;
+        currentMiss.val = currentScore.val - currentShoots.val;
     }
 
     void Start(){

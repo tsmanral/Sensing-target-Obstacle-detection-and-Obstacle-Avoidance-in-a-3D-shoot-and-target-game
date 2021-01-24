@@ -52,11 +52,13 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
+     <Compile Include="Assets\Scripts\BallPosition.cs" />
      <Compile Include="Assets\Scripts\StateManager.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
      <Compile Include="Assets\Scripts\Utils\Observable.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
+     <Compile Include="Assets\Scripts\PlaneMovement.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
      <Compile Include="Assets\Scripts\CameraController.cs" />
      <Compile Include="Assets\Scripts\UIController.cs" />
@@ -69,6 +71,7 @@
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
+     <Compile Include="Assets\ball.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
      <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
@@ -93,7 +96,6 @@
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMPro.cginc" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_SDF-Mobile Overlay.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile Masking.shader" />
-     <None Include="Assets\Shaders\DottedLine.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_Bitmap-Custom-Atlas.shader" />
      <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF.shader" />
      <None Include="Assets\TextMesh Pro\Resources\Shaders\TMP_Bitmap.shader" />
@@ -351,17 +353,32 @@
  <Reference Include="UnityEditor.UnityConnectModule">
  <HintPath>C:/Program Files/Unity/Editor/Data/Managed/UnityEngine/UnityEditor.UnityConnectModule.dll</HintPath>
  </Reference>
+ <Reference Include="System.IO.Abstractions">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/PackageCache/com.unity.ml-agents@1.0.6/Plugins/System.IO.Abstractions.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Analytics.StandardEvents">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/PackageCache/com.unity.analytics@3.5.3/AnalyticsStandardEvents/Unity.Analytics.StandardEvents.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Analytics.Editor">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/PackageCache/com.unity.analytics@3.5.3/Unity.Analytics.Editor.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.Burst.Unsafe">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/PackageCache/com.unity.burst@1.3.4/Unity.Burst.Unsafe.dll</HintPath>
+ </Reference>
+ <Reference Include="Google.Protobuf">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/PackageCache/com.unity.barracuda@1.0.4/Barracuda/Runtime/Plugins/ProtoBuffer/Google.Protobuf.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.Analytics.Tracker">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/PackageCache/com.unity.analytics@3.5.3/Unity.Analytics.Tracker.dll</HintPath>
  </Reference>
- <Reference Include="nunit.framework">
- <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/PackageCache/com.unity.ext.nunit@1.0.5/net35/unity-custom/nunit.framework.dll</HintPath>
+ <Reference Include="System.IO.Abstractions.TestingHelpers">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/PackageCache/com.unity.ml-agents@1.0.6/Plugins/System.IO.Abstractions.TestingHelpers.dll</HintPath>
+ </Reference>
+ <Reference Include="System.Interactive.Async">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/PackageCache/com.unity.ml-agents@1.0.6/Plugins/ProtoBuffer/System.Interactive.Async.dll</HintPath>
+ </Reference>
+ <Reference Include="Grpc.Core">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/PackageCache/com.unity.ml-agents@1.0.6/Plugins/ProtoBuffer/Grpc.Core.dll</HintPath>
  </Reference>
  <Reference Include="netstandard">
  <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/ref/2.0.0/netstandard.dll</HintPath>
@@ -708,6 +725,15 @@
  <Reference Include="System.Xml.Serialization">
  <HintPath>C:/Program Files/Unity/Editor/Data/NetStandard/compat/2.0.0/shims/netfx/System.Xml.Serialization.dll</HintPath>
  </Reference>
+ <Reference Include="Unity.ML-Agents">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.ML-Agents.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Barracuda.iOSBLAS">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Barracuda.iOSBLAS.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Barracuda.BurstBLAS">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Barracuda.BurstBLAS.dll</HintPath>
+ </Reference>
  <Reference Include="Unity.VSCode.Editor">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.VSCode.Editor.dll</HintPath>
  </Reference>
@@ -717,17 +743,14 @@
  <Reference Include="UnityEngine.Purchasing">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.Purchasing.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.XR.LegacyInputHelpers">
- <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
- </Reference>
  <Reference Include="Unity.TextMeshPro.Editor">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.TextMeshPro.Editor.dll</HintPath>
  </Reference>
  <Reference Include="Unity.VisualStudio.Editor">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.VisualStudio.Editor.dll</HintPath>
  </Reference>
- <Reference Include="Unity.Timeline.Editor">
- <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ <Reference Include="Unity.Barracuda">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Barracuda.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Timeline">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Timeline.dll</HintPath>
@@ -735,44 +758,74 @@
  <Reference Include="Unity.TextMeshPro">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.TextMeshPro.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.XR.LegacyInputHelpers">
- <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+ <Reference Include="Unity.Burst.Editor">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Burst.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Monetization">
- <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
+ <Reference Include="UnityEngine.Advertisements">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
  </Reference>
  <Reference Include="Unity.2D.Sprite.Editor">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.2D.Sprite.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEditor.Purchasing">
- <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEditor.Purchasing.dll</HintPath>
- </Reference>
  <Reference Include="UnityEditor.UI">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEditor.UI.dll</HintPath>
- </Reference>
- <Reference Include="UnityEditor.SpatialTracking">
- <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
  </Reference>
  <Reference Include="Unity.Rider.Editor">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Rider.Editor.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.SpatialTracking">
- <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
- </Reference>
  <Reference Include="Analytics">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Analytics.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.SpatialTracking">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.SpatialTracking.dll</HintPath>
  </Reference>
  <Reference Include="UnityEngine.UI">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.UI.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Advertisements.Editor">
- <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.dll</HintPath>
- </Reference>
  <Reference Include="Unity.Analytics.DataPrivacy">
  <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Analytics.DataPrivacy.dll</HintPath>
  </Reference>
- <Reference Include="UnityEngine.Advertisements">
- <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.Advertisements.dll</HintPath>
+ <Reference Include="Unity.Mathematics">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Mathematics.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ML-Agents.CommunicatorObjects">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.ML-Agents.CommunicatorObjects.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Burst">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Burst.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.XR.LegacyInputHelpers">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.XR.LegacyInputHelpers.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Timeline.Editor">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Timeline.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.XR.LegacyInputHelpers">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEditor.XR.LegacyInputHelpers.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Mathematics.Editor">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Mathematics.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Monetization">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.Monetization.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.Purchasing">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEditor.Purchasing.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEditor.SpatialTracking">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEditor.SpatialTracking.dll</HintPath>
+ </Reference>
+ <Reference Include="UnityEngine.Advertisements.Editor">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/UnityEngine.Advertisements.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Barracuda.Editor">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Barracuda.Editor.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.Barracuda.MacBLAS">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.Barracuda.MacBLAS.dll</HintPath>
+ </Reference>
+ <Reference Include="Unity.ML-Agents.Editor">
+ <HintPath>C:/Users/tribh/GUI-Ball-In-a-Cube/GUI-Ball-In-a-Cube/Library/ScriptAssemblies/Unity.ML-Agents.Editor.dll</HintPath>
  </Reference>
   </ItemGroup>
   <ItemGroup>

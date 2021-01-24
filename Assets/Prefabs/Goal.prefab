@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7454319565916640343}
   - component: {fileID: 7454319565916640342}
   - component: {fileID: 7454319565916640340}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Goal
   m_TagString: Goal
   m_Icon: {fileID: 0}
@@ -129,6 +129,10 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Star
+      objectReference: {fileID: 0}
+    - target: {fileID: 100000, guid: 22e0d0ae1fb9b004a902d43ddce75ef8, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 22e0d0ae1fb9b004a902d43ddce75ef8, type: 3}

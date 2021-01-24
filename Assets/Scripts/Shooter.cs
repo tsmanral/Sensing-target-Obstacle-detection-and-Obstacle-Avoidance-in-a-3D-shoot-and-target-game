@@ -13,6 +13,9 @@ public class Shooter : Agent{
     public float rotationSpeed;
     public bool isCounting = false;
 
+    private int minStepsBetweenShots = 50;
+    private bool ShotAvaliable = true;
+
     Vector3 currentPosition;
     Quaternion currentRotation;
     
@@ -23,10 +26,14 @@ public class Shooter : Agent{
     public override void Initialize(){
         currentPosition = transform.position;
         currentRotation = transform.rotation;
-        predict();
 
         StateManager.instance.currentScore.propertyUpdated += onHit;
+
+        StateManager.instance.currentMiss.propertyUpdated += onMiss;
+        
         EnvironmentParameters = Academy.Instance.EnvironmentParameters;
+
+        OnEnvironmentReset?.Invoke();
     }
 
     
@@ -35,6 +42,12 @@ public class Shooter : Agent{
     }
 
     async void shoot(){
+        if (!ShotAvaliable)
+            return;
+
+        var layerMask = 1 << LayerMask.NameToLayer("Enemy");
+        var direction = transform.forward;
+        
         GameObject ball = Instantiate(ballPrefab, firePoint.transform.position, Quaternion.identity);
         ball.GetComponent<Rigidbody>().AddForce(calculateForce(), ForceMode.Impulse);
         StateManager.instance.shoot();
@@ -102,24 +115,48 @@ public class Shooter : Agent{
     }
 
     void onHit(int v){
+        AddReward(1f);
         Debug.Log("Nice Shot!!");
     }
 
+    void onMiss(int v){
+        AddReward(-1f);
+        EndEpisode();
+        Debug.Log("Miss !!");
+    }
 
-    //public override void OnActionReceived(float[] vectorAction){
 
-    //}
+    public override void OnActionReceived(float[] vectorAction){
+        
+        if (Mathf.RoundToInt(vectorAction[0]) >= 1)
+        {
+            //shoot();
+        }
+    }
 
-    //public override void Heuristic(float[] actionsOut){
+    public override void Heuristic(float[] actionsOut){
+        actionsOut[0] = Input.GetKey(KeyCode.Space) ? 1f : 0f;
+        actionsOut[2] = Input.GetAxis("Horizontal");
+        actionsOut[3] = Input.GetAxis("Vertical");
+    }
 
-    //}
-
-    //public override void CollectObservations(VectorSensor sensor){
-
-    //}
+    public override void CollectObservations(VectorSensor sensor){
+        //sensor.AddObservation(transform.rotation);
+        sensor.AddObservation(ShotAvaliable);
+    }
     
-    //public override void OnEpisodeBegin(){
+    public override void OnEpisodeBegin(){
+        
+        //minStepsBetweenShots = Mathf.FloorToInt(EnvironmentParameters.GetWithDefault("shootingFrequency", 30f));
 
-    //}
+        predict();
+
+        transform.position = currentPosition;
+        transform.rotation = currentRotation;
+        StateManager.instance.currentScore.val = 0;
+        ShotAvaliable = true;
+
+        OnEnvironmentReset?.Invoke();
+    }
 
 }
