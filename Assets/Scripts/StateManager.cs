@@ -20,18 +20,20 @@ public class StateManager : Singleton<StateManager>{
 
     public Observable<int> currentScore = new Observable<int>(0);
     public Observable<int> currentShoots = new Observable<int>(0);
-
     public Observable<int> currentMiss = new Observable<int>(0);
+
+    public Shooter Agent;
 
     int maxIterationsSpawn = 10;
 
+    // Increment the score when ball touches the goal. 
     public void addPoint(){
         currentScore.val ++;
     }
 
+    // Increment the number of time player threw the ball. 
     public void shoot(){
         currentShoots.val ++;
-        currentMiss.val = currentScore.val - currentShoots.val;
     }
 
     void Start(){
@@ -41,9 +43,24 @@ public class StateManager : Singleton<StateManager>{
         createObstacles();
         createNewCollectable();
         PredictionManager.instance.copyAllObstacles();
+
+        Agent.OnEnvironmentReset += Respawn;
     }
 
+    // Monitor if the ball misses the goal.
+    void Update()
+    {
+        if(currentShoots.val > currentScore.val)
+        {
+            currentMiss.val = currentShoots.val - currentScore.val;
+            // Debug.Log(currentShoots.val);
+            // Debug.Log(currentScore.val);
+        }
+    }
+
+    // Destroy and Inititae a new random Goal every time we score.
     void onScore(int v){
+        Destroy(GameObject.FindWithTag("Goal"));
         createNewCollectable();
     }
 
@@ -51,6 +68,7 @@ public class StateManager : Singleton<StateManager>{
         player.transform.position = calculatePositionInVolume(playerVolume);
     }
 
+    // Initiate a new Goal.
     void createNewCollectable(){
         GameObject c = Instantiate(collectablePrefab);
         bool empty = false;
@@ -68,6 +86,8 @@ public class StateManager : Singleton<StateManager>{
         c.transform.position = p;
     }
 
+    // Inititate new obstacles.
+    // TODO: Add movement to the plane.
     void createObstacles(){
         int currentObs = 0;
         while(currentObs < maxObstacles){
@@ -114,4 +134,9 @@ public class StateManager : Singleton<StateManager>{
         Gizmos.color = Color.yellow;
 		Gizmos.DrawWireCube(Vector3.zero, obstaclesVolume);
 	}
+
+    public void Respawn()
+    {
+        Debug.Log("Respawn");
+    }
 }

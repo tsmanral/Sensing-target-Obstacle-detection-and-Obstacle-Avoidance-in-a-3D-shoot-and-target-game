@@ -14,9 +14,11 @@ public class UIController : MonoBehaviour{
         StateManager.instance.currentMiss.propertyUpdated += onMiss;
     }
 
+    // Update the Score card to the score 
     void onHit(int v){
         ScoreCard.text = v.ToString();
         HitCard.text = "Nice Shot!!";
+        Invoke("ScoreUpdate", 1);
     }
 
     void onMiss(int v){

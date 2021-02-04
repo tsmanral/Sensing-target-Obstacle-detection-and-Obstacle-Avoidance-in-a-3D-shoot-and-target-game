@@ -32,8 +32,6 @@ public class Shooter : Agent{
         StateManager.instance.currentMiss.propertyUpdated += onMiss;
         
         EnvironmentParameters = Academy.Instance.EnvironmentParameters;
-
-        OnEnvironmentReset?.Invoke();
     }
 
     
@@ -50,7 +48,6 @@ public class Shooter : Agent{
         
         GameObject ball = Instantiate(ballPrefab, firePoint.transform.position, Quaternion.identity);
         ball.GetComponent<Rigidbody>().AddForce(calculateForce(), ForceMode.Impulse);
-        StateManager.instance.shoot();
 
         isCounting = true;
 
@@ -62,8 +59,12 @@ public class Shooter : Agent{
         await WaitTwoSecondAsync();
         
         transform.position = ball.GetComponent<BallPosition>().finalPos;
+        currentPosition = transform.position;
+        currentRotation = transform.rotation;
 
         isCounting = false;
+
+        StateManager.instance.shoot();
 
         Destroy(ball);
     }
@@ -115,7 +116,7 @@ public class Shooter : Agent{
     }
 
     void onHit(int v){
-        AddReward(1f);
+        AddReward(0.3f);
         Debug.Log("Nice Shot!!");
     }
 
@@ -132,6 +133,12 @@ public class Shooter : Agent{
         {
             //shoot();
         }
+
+        transform.Rotate(
+            -vectorAction[3] * rotationSpeed, 
+            vectorAction[2] * rotationSpeed, 
+            0.0f
+        );
     }
 
     public override void Heuristic(float[] actionsOut){
@@ -154,6 +161,7 @@ public class Shooter : Agent{
         transform.position = currentPosition;
         transform.rotation = currentRotation;
         StateManager.instance.currentScore.val = 0;
+        StateManager.instance.currentShoots.val = 0;
         ShotAvaliable = true;
 
         OnEnvironmentReset?.Invoke();

@@ -1548,6 +1548,7 @@ MonoBehaviour:
   playerVolume: {x: 6, y: 6, z: 6}
   collectablesVolume: {x: 9, y: 9, z: 9}
   obstaclesVolume: {x: 10, y: 10, z: 10}
+  Agent: {fileID: 8212974821391853891}
 --- !u!114 &1759004328
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1563,9 +1564,9 @@ MonoBehaviour:
   m_BrainParameters:
     VectorObservationSize: 1
     NumStackedVectorObservations: 1
-    VectorActionSize: 01000000
+    VectorActionSize: 04000000
     VectorActionDescriptions: []
-    VectorActionSpaceType: 0
+    VectorActionSpaceType: 1
   m_Model: {fileID: 0}
   m_InferenceDevice: 0
   m_BehaviorType: 1
