@@ -42,12 +42,15 @@ public class StateManager : Singleton<StateManager>{
         movePlayer();
         createObstacles();
         createNewCollectable();
-        PredictionManager.instance.copyAllObstacles();
+
+        // Removed for AI training
+        // PredictionManager.instance.copyAllObstacles();
 
         Agent.OnEnvironmentReset += Respawn;
     }
 
     // Monitor if the ball misses the goal.
+    // TODO: Change it so it doesn't go into infinity loop.
     void Update()
     {
         if(currentShoots.val > currentScore.val)
@@ -78,7 +81,7 @@ public class StateManager : Singleton<StateManager>{
 
         while(!empty && iteration < maxIterationsSpawn){
             p = calculatePositionInVolume(collectablesVolume);
-            var hits = Physics.OverlapSphere(p, .3f);
+            var hits = Physics.OverlapSphere(p, .6f);
             empty = hits.Length <= 0;
             iteration ++;
         }
@@ -114,6 +117,7 @@ public class StateManager : Singleton<StateManager>{
         }
     }
 
+    // Calculate a random position inside the Gizmos
     Vector3 calculatePositionInVolume(Vector3 vol){
         Vector3 p = new Vector3();
         p.x = Random.Range(-vol.x/2, vol.x/2);
@@ -137,6 +141,7 @@ public class StateManager : Singleton<StateManager>{
 
     public void Respawn()
     {
-        Debug.Log("Respawn");
+        currentScore.val = 0;
+        currentShoots.val = 0;
     }
 }

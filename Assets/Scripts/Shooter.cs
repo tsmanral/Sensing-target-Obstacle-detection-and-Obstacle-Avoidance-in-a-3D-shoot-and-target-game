@@ -7,7 +7,6 @@ using Unity.MLAgents;
 using Unity.MLAgents.Sensors;
 
 public class Shooter : Agent{
-    public GameObject firePoint;
     public GameObject ballPrefab;
     public float power;
     public float rotationSpeed;
@@ -15,6 +14,8 @@ public class Shooter : Agent{
 
     private int minStepsBetweenShots = 50;
     private bool ShotAvaliable = true;
+
+    private bool ShotIsReady = true;
 
     Vector3 currentPosition;
     Quaternion currentRotation;
@@ -45,28 +46,36 @@ public class Shooter : Agent{
 
         var layerMask = 1 << LayerMask.NameToLayer("Enemy");
         var direction = transform.forward;
-        
-        GameObject ball = Instantiate(ballPrefab, firePoint.transform.position, Quaternion.identity);
-        ball.GetComponent<Rigidbody>().AddForce(calculateForce(), ForceMode.Impulse);
 
-        isCounting = true;
+        if(ShotIsReady){
+            
+            GameObject ball = Instantiate(ballPrefab, this.transform.position, Quaternion.identity);
+            ball.GetComponent<Rigidbody>().AddForce(calculateForce(), ForceMode.Impulse);
 
-        await WaitFiveSecondAsync();
+            isCounting = true;
 
-        ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
+            await WaitFiveSecondAsync();
 
-        await WaitTwoSecondAsync();
-        
-        transform.position = ball.GetComponent<BallPosition>().finalPos;
-        currentPosition = transform.position;
-        currentRotation = transform.rotation;
+            ball.GetComponent<Rigidbody>().velocity = Vector3.zero;
+            ball.GetComponent<Rigidbody>().angularVelocity = Vector3.zero;
 
-        isCounting = false;
+            await WaitTwoSecondAsync();
+            
+            transform.position = ball.GetComponent<BallPosition>().finalPos;
+            currentPosition = transform.position;
+            currentRotation = transform.rotation;
 
-        StateManager.instance.shoot();
+            isCounting = false;
 
-        Destroy(ball);
+            StateManager.instance.shoot();
+
+            Destroy(ball);
+
+            ShotIsReady = false;
+
+            // Removed for AI training
+            // predict();
+        }
     }
 
     private async Task WaitTwoSecondAsync()
@@ -81,7 +90,12 @@ public class Shooter : Agent{
         Debug.Log("Finished 5 sec waiting.");
     }
 
-    void Update(){
+    void FixedUpdate(){
+
+        if(ShotIsReady){
+            RequestDecision();
+        }
+
         float vertical = Input.GetAxis ("Vertical");
         float Horizontal = Input.GetAxis ("Horizontal");
 
@@ -91,29 +105,35 @@ public class Shooter : Agent{
             0.0f
         );
 
+        // Removed for AI training
+        /*
         if(currentRotation != transform.rotation){
            predict();
         }   
 
         if(currentPosition != transform.transform.position){
            predict();
-        }       
+        }   
+        */    
     
         currentRotation = transform.rotation;
 
-        if(Input.GetKeyUp(KeyCode.Space)){
+        /*if(Input.GetKeyUp(KeyCode.Space)){
             if(isCounting == false ){
                 shoot();
             }
-        }
+        }*/
     }
 
+    // Removed for AI training
+    /*
     void predict(){
         if(isCounting == false)
         {
-            PredictionManager.instance.predict(ballPrefab, firePoint.transform.position, calculateForce());
+            PredictionManager.instance.predict(ballPrefab, this.transform.position, calculateForce());
         }
-    }
+    } 
+    */
 
     void onHit(int v){
         AddReward(0.3f);
@@ -129,42 +149,49 @@ public class Shooter : Agent{
 
     public override void OnActionReceived(float[] vectorAction){
         
-        if (Mathf.RoundToInt(vectorAction[0]) >= 1)
+        if (Mathf.FloorToInt(vectorAction[0]) == 1)
         {
-            //shoot();
+            shoot();
         }
 
-        transform.Rotate(
-            -vectorAction[3] * rotationSpeed, 
-            vectorAction[2] * rotationSpeed, 
+        /*transform.Rotate(
+            -vectorAction[2] * rotationSpeed, 
+            vectorAction[1] * rotationSpeed, 
             0.0f
         );
+        predict(); */
     }
 
     public override void Heuristic(float[] actionsOut){
         actionsOut[0] = Input.GetKey(KeyCode.Space) ? 1f : 0f;
-        actionsOut[2] = Input.GetAxis("Horizontal");
-        actionsOut[3] = Input.GetAxis("Vertical");
+        actionsOut[1] = Input.GetAxis("Horizontal");
+        actionsOut[2] = Input.GetAxis("Vertical");
     }
 
     public override void CollectObservations(VectorSensor sensor){
         //sensor.AddObservation(transform.rotation);
-        sensor.AddObservation(ShotAvaliable);
+        sensor.AddObservation(GameObject.FindWithTag("Goal").transform.position);
     }
     
     public override void OnEpisodeBegin(){
+        Reset();
+    }
+
+    private void Reset()
+    {
+        ShotIsReady = true;
         
+        OnEnvironmentReset?.Invoke();
+
         //minStepsBetweenShots = Mathf.FloorToInt(EnvironmentParameters.GetWithDefault("shootingFrequency", 30f));
 
-        predict();
+        // Removed for AI training
+        // predict();
 
         transform.position = currentPosition;
         transform.rotation = currentRotation;
-        StateManager.instance.currentScore.val = 0;
-        StateManager.instance.currentShoots.val = 0;
-        ShotAvaliable = true;
 
-        OnEnvironmentReset?.Invoke();
+        ShotAvaliable = true;
     }
 
 }

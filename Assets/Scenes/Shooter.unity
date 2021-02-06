@@ -125,6 +125,36 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!1 &78106208
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 78106209}
+  m_Layer: 0
+  m_Name: FirePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &78106209
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 78106208}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 5161407528778537809}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &430304990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1391,7 +1421,6 @@ GameObject:
   - component: {fileID: 1759004325}
   - component: {fileID: 1759004326}
   - component: {fileID: 1759004327}
-  - component: {fileID: 1759004328}
   m_Layer: 0
   m_Name: State Manager
   m_TagString: Untagged
@@ -1427,7 +1456,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keepAlive: 0
   obstacles: {fileID: 718029291}
-  maxIterations: 100
+  maxIterations: 90
   mat1: {fileID: 2100000, guid: 6cd209e71457ad143b09d3ac03fd5a4f, type: 2}
   mat2: {fileID: 2100000, guid: 52dcbe0ef0bf66240ba48a792b247f47, type: 2}
 --- !u!120 &1759004326
@@ -1540,7 +1569,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   keepAlive: 0
   maxObstacles: 5
-  player: {fileID: 8212974821391853890}
+  player: {fileID: 78106208}
   collectablePrefab: {fileID: 7454319565916640337, guid: bd69fef868592ed47bdd1001a02e0d39,
     type: 3}
   obstaclesRoot: {fileID: 718029291}
@@ -1549,30 +1578,6 @@ MonoBehaviour:
   collectablesVolume: {x: 9, y: 9, z: 9}
   obstaclesVolume: {x: 10, y: 10, z: 10}
   Agent: {fileID: 8212974821391853891}
---- !u!114 &1759004328
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1759004323}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5d1c4e0b1822b495aa52bc52839ecb30, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_BrainParameters:
-    VectorObservationSize: 1
-    NumStackedVectorObservations: 1
-    VectorActionSize: 04000000
-    VectorActionDescriptions: []
-    VectorActionSpaceType: 1
-  m_Model: {fileID: 0}
-  m_InferenceDevice: 0
-  m_BehaviorType: 1
-  m_BehaviorName: My Behavior
-  TeamId: 0
-  m_UseChildSensors: 1
 --- !u!1 &1774282649
 GameObject:
   m_ObjectHideFlags: 0
@@ -1735,36 +1740,6 @@ MonoBehaviour:
   m_FirstSelected: {fileID: 0}
   m_sendNavigationEvents: 1
   m_DragThreshold: 10
---- !u!1 &2016543158
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2016543159}
-  m_Layer: 0
-  m_Name: FirePoint
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2016543159
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2016543158}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0.17}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 5161407528778537809}
-  m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2092282449
 GameObject:
   m_ObjectHideFlags: 0
@@ -1872,7 +1847,7 @@ Transform:
   m_LocalPosition: {x: 0, y: 4, z: 2}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
-  - {fileID: 2016543159}
+  - {fileID: 78106209}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1915,7 +1890,6 @@ MonoBehaviour:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
   MaxStep: 0
-  firePoint: {fileID: 2016543158}
   ballPrefab: {fileID: 2541648754435977243, guid: 0a58b7fbc40200a489c65aa8dfda60a3,
     type: 3}
   power: 60
@@ -1947,9 +1921,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 1
+    VectorObservationSize: 3
     NumStackedVectorObservations: 1
-    VectorActionSize: 04000000
+    VectorActionSize: 03000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
   m_Model: {fileID: 0}
