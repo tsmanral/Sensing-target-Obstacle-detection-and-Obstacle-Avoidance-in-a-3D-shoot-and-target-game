@@ -21,6 +21,8 @@ public class StateManager : Singleton<StateManager>{
     public Observable<int> currentScore = new Observable<int>(0);
     public Observable<int> currentShoots = new Observable<int>(0);
     public Observable<int> currentMiss = new Observable<int>(0);
+    public Observable<int> currentBounce = new Observable<int>(0);
+    public Observable<int> currentObstacle = new Observable<int>(0);
 
     public Shooter Agent;
 
@@ -34,6 +36,14 @@ public class StateManager : Singleton<StateManager>{
     // Increment the number of time player threw the ball. 
     public void shoot(){
         currentShoots.val ++;
+    }
+
+    public void addBounces() {
+        currentBounce.val++;
+    }
+
+    public void addObstacles() {
+        currentObstacle.val++;
     }
 
     void Start(){
@@ -56,8 +66,6 @@ public class StateManager : Singleton<StateManager>{
         if(currentShoots.val > currentScore.val)
         {
             currentMiss.val = currentShoots.val - currentScore.val;
-            // Debug.Log(currentShoots.val);
-            // Debug.Log(currentScore.val);
         }
     }
 
@@ -74,6 +82,7 @@ public class StateManager : Singleton<StateManager>{
     // Initiate a new Goal.
     void createNewCollectable(){
         GameObject c = Instantiate(collectablePrefab);
+
         bool empty = false;
         int iteration = 0;
 
@@ -92,6 +101,10 @@ public class StateManager : Singleton<StateManager>{
     // Inititate new obstacles.
     // TODO: Add movement to the plane.
     void createObstacles(){
+        GameObject[] Obstacles = GameObject.FindGameObjectsWithTag("Obstacle");
+        foreach(GameObject Obstacle in Obstacles)
+            GameObject.Destroy(Obstacle);
+
         int currentObs = 0;
         while(currentObs < maxObstacles){
             GameObject o = Instantiate(obstacle);
@@ -143,5 +156,9 @@ public class StateManager : Singleton<StateManager>{
     {
         currentScore.val = 0;
         currentShoots.val = 0;
+        currentBounce.val = 0;
+        currentObstacle.val = 0;
+        movePlayer();
+        createObstacles();
     }
 }

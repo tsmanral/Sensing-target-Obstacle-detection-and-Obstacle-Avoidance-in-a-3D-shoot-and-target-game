@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Goal
+  - Walls
+  - Obstacle
+  - FirePoint
   layers:
   - Default
   - TransparentFX

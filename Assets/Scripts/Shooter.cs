@@ -31,8 +31,14 @@ public class Shooter : Agent{
         StateManager.instance.currentScore.propertyUpdated += onHit;
 
         StateManager.instance.currentMiss.propertyUpdated += onMiss;
+
+        StateManager.instance.currentBounce.propertyUpdated += onBounce;
+
+        StateManager.instance.currentObstacle.propertyUpdated += onObstacle;
         
         EnvironmentParameters = Academy.Instance.EnvironmentParameters;
+
+        shoot();
     }
 
     
@@ -47,10 +53,13 @@ public class Shooter : Agent{
         var layerMask = 1 << LayerMask.NameToLayer("Enemy");
         var direction = transform.forward;
 
+        Debug.DrawRay(transform.position, direction, Color.blue, 50f);
+
         if(ShotIsReady){
             
             GameObject ball = Instantiate(ballPrefab, this.transform.position, Quaternion.identity);
             ball.GetComponent<Rigidbody>().AddForce(calculateForce(), ForceMode.Impulse);
+            Debug.DrawRay(transform.position, direction, Color.blue, 50f);
 
             isCounting = true;
 
@@ -62,8 +71,8 @@ public class Shooter : Agent{
             await WaitTwoSecondAsync();
             
             transform.position = ball.GetComponent<BallPosition>().finalPos;
-            currentPosition = transform.position;
-            currentRotation = transform.rotation;
+            //currentPosition = transform.position;
+            //currentRotation = transform.rotation;
 
             isCounting = false;
 
@@ -92,12 +101,15 @@ public class Shooter : Agent{
 
     void FixedUpdate(){
 
-        if(ShotIsReady){
+        /*if(ShotIsReady){
             RequestDecision();
-        }
+        }*/
 
+        // Removed for AI training
+        /*
         float vertical = Input.GetAxis ("Vertical");
         float Horizontal = Input.GetAxis ("Horizontal");
+        
 
         transform.Rotate(
             -vertical * rotationSpeed, 
@@ -105,8 +117,6 @@ public class Shooter : Agent{
             0.0f
         );
 
-        // Removed for AI training
-        /*
         if(currentRotation != transform.rotation){
            predict();
         }   
@@ -118,11 +128,13 @@ public class Shooter : Agent{
     
         currentRotation = transform.rotation;
 
-        /*if(Input.GetKeyUp(KeyCode.Space)){
+        /*
+        if(Input.GetKeyUp(KeyCode.Space)){
             if(isCounting == false ){
                 shoot();
             }
-        }*/
+        }
+        */
     }
 
     // Removed for AI training
@@ -135,42 +147,60 @@ public class Shooter : Agent{
     } 
     */
 
+    // When Ball hits the Goal
     void onHit(int v){
-        AddReward(0.3f);
-        Debug.Log("Nice Shot!!");
+        AddReward(2f);
+        ShotIsReady = true;
     }
 
+    // When Ball misses the Goal
     void onMiss(int v){
-        AddReward(-1f);
+        AddReward(-0.6f);
         EndEpisode();
-        Debug.Log("Miss !!");
     }
 
+    // When Ball hits any of the "Walls"
+    void onBounce(int v){
+        AddReward(0.1f);
+        ShotIsReady = true;
+    }
+
+    // When Ball hits any of the "Obstacle"
+    void onObstacle(int v){
+        AddReward(-0.1f);
+        ShotIsReady = true;
+    }
 
     public override void OnActionReceived(float[] vectorAction){
         
-        if (Mathf.FloorToInt(vectorAction[0]) == 1)
+        if (Mathf.FloorToInt(vectorAction[1]) == 1)
         {
             shoot();
         }
 
-        /*transform.Rotate(
+        transform.Rotate(
             -vectorAction[2] * rotationSpeed, 
-            vectorAction[1] * rotationSpeed, 
+            vectorAction[0] * rotationSpeed, 
             0.0f
         );
-        predict(); */
+        
+        //AddReward(-1f / MaxStep);
+
+        // Removed for AI training
+        // predict(); 
     }
 
     public override void Heuristic(float[] actionsOut){
-        actionsOut[0] = Input.GetKey(KeyCode.Space) ? 1f : 0f;
-        actionsOut[1] = Input.GetAxis("Horizontal");
+        actionsOut[0] = Input.GetAxis("Horizontal");
+        actionsOut[1] = Input.GetKey(KeyCode.Space) ? 1.0f : 0.0f;
         actionsOut[2] = Input.GetAxis("Vertical");
     }
 
     public override void CollectObservations(VectorSensor sensor){
-        //sensor.AddObservation(transform.rotation);
-        sensor.AddObservation(GameObject.FindWithTag("Goal").transform.position);
+        sensor.AddObservation(this.transform.rotation.z);
+        sensor.AddObservation(this.transform.rotation.y);
+        sensor.AddObservation(this.transform.rotation.x);
+        sensor.AddObservation(this.transform.position - GameObject.FindWithTag("Goal").transform.localPosition);
     }
     
     public override void OnEpisodeBegin(){
@@ -188,8 +218,8 @@ public class Shooter : Agent{
         // Removed for AI training
         // predict();
 
-        transform.position = currentPosition;
-        transform.rotation = currentRotation;
+        //transform.position = currentPosition;
+        //transform.rotation = currentRotation;
 
         ShotAvaliable = true;
     }

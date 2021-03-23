@@ -25,4 +25,14 @@ public class BallPosition : MonoBehaviour
             Debug.Log(this.transform.position);
         }
     }
+
+    private void OnCollisionEnter(Collision collidedObj)
+    {
+        if (collidedObj.gameObject.CompareTag("Walls")){
+            StateManager.instance.addBounces();
+        }
+        else if(collidedObj.gameObject.CompareTag("Obstacle")){
+            StateManager.instance.addObstacles();
+        }
+    }
 }
