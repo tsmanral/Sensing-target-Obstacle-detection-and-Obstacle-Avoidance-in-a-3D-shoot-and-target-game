@@ -1844,7 +1844,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8212974821391853890}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 4, z: 2}
+  m_LocalPosition: {x: -0.0016126186, y: 4.0082197, z: 2}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 78106209}
@@ -1864,10 +1864,10 @@ GameObject:
   - component: {fileID: 8212974821391853892}
   - component: {fileID: 8212974821391853893}
   - component: {fileID: 8212974821391853896}
-  - component: {fileID: 8212974821391853895}
   - component: {fileID: 8212974821391853894}
   - component: {fileID: 8212974821391853897}
   - component: {fileID: 8212974821391853898}
+  - component: {fileID: 8212974821391853895}
   m_Layer: 2
   m_Name: FirePosition
   m_TagString: Untagged
@@ -1924,7 +1924,7 @@ MonoBehaviour:
   m_BrainParameters:
     VectorObservationSize: 6
     NumStackedVectorObservations: 1
-    VectorActionSize: 03000000
+    VectorActionSize: 04000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
   m_Model: {fileID: 0}
@@ -1991,7 +1991,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 5000
+  MaxStep: 12500
 --- !u!114 &8212974821391853897
 MonoBehaviour:
   m_ObjectHideFlags: 0

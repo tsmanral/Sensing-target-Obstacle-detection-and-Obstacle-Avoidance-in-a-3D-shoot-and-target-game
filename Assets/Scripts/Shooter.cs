@@ -149,26 +149,24 @@ public class Shooter : Agent{
 
     // When Ball hits the Goal
     void onHit(int v){
-        AddReward(2f);
+        AddReward(0.3f);
         ShotIsReady = true;
     }
 
     // When Ball misses the Goal
     void onMiss(int v){
-        AddReward(-0.6f);
+        AddReward(-1f);
         EndEpisode();
     }
 
     // When Ball hits any of the "Walls"
     void onBounce(int v){
         AddReward(0.1f);
-        ShotIsReady = true;
     }
 
     // When Ball hits any of the "Obstacle"
     void onObstacle(int v){
         AddReward(-0.1f);
-        ShotIsReady = true;
     }
 
     public override void OnActionReceived(float[] vectorAction){
@@ -200,7 +198,7 @@ public class Shooter : Agent{
         sensor.AddObservation(this.transform.rotation.z);
         sensor.AddObservation(this.transform.rotation.y);
         sensor.AddObservation(this.transform.rotation.x);
-        sensor.AddObservation(this.transform.position - GameObject.FindWithTag("Goal").transform.localPosition);
+        sensor.AddObservation(GameObject.FindWithTag("Goal").transform.position - this.transform.position);
     }
     
     public override void OnEpisodeBegin(){
