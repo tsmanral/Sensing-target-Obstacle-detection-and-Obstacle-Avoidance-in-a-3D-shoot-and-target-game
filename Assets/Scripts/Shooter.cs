@@ -38,7 +38,7 @@ public class Shooter : Agent{
         
         EnvironmentParameters = Academy.Instance.EnvironmentParameters;
 
-        shoot();
+        //shoot();
     }
 
     
@@ -50,7 +50,6 @@ public class Shooter : Agent{
         if (!ShotAvaliable)
             return;
 
-        var layerMask = 1 << LayerMask.NameToLayer("Enemy");
         var direction = transform.forward;
 
         Debug.DrawRay(transform.position, direction, Color.blue, 50f);
@@ -76,11 +75,12 @@ public class Shooter : Agent{
 
             isCounting = false;
 
-            StateManager.instance.shoot();
+            ShotIsReady = false;
 
             Destroy(ball);
 
-            ShotIsReady = false;
+            StateManager.instance.shoot();
+
 
             // Removed for AI training
             // predict();
@@ -126,7 +126,7 @@ public class Shooter : Agent{
         }   
         */    
     
-        currentRotation = transform.rotation;
+        //currentRotation = transform.rotation;
 
         /*
         if(Input.GetKeyUp(KeyCode.Space)){
@@ -171,7 +171,7 @@ public class Shooter : Agent{
 
     public override void OnActionReceived(float[] vectorAction){
         
-        if (Mathf.FloorToInt(vectorAction[1]) == 1)
+        if (Mathf.FloorToInt(vectorAction[1]) >= 1)
         {
             shoot();
         }
@@ -195,6 +195,7 @@ public class Shooter : Agent{
     }
 
     public override void CollectObservations(VectorSensor sensor){
+        sensor.AddObservation(ShotIsReady);
         sensor.AddObservation(this.transform.rotation.z);
         sensor.AddObservation(this.transform.rotation.y);
         sensor.AddObservation(this.transform.rotation.x);

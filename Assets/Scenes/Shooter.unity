@@ -1922,9 +1922,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 6
+    VectorObservationSize: 7
     NumStackedVectorObservations: 1
-    VectorActionSize: 04000000
+    VectorActionSize: 03000000
     VectorActionDescriptions: []
     VectorActionSpaceType: 1
   m_Model: {fileID: 0}
@@ -1991,7 +1991,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 12500
+  MaxStep: 50000
 --- !u!114 &8212974821391853897
 MonoBehaviour:
   m_ObjectHideFlags: 0
