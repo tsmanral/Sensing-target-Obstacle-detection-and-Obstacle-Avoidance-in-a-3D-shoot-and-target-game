@@ -170,8 +170,15 @@ public class Shooter : Agent{
     }
 
     public override void OnActionReceived(float[] vectorAction){
+
+        /*
+        for (var i = 0; i < vectorAction.Length; i++)
+        {
+            vectorAction[i] = Mathf.Clamp(vectorAction[i], -1f, 1f);
+        }
         
-        if (Mathf.FloorToInt(vectorAction[1]) >= 1)
+         
+        if (Mathf.FloorToInt(vectorAction[1]) == 1)
         {
             shoot();
         }
@@ -181,24 +188,72 @@ public class Shooter : Agent{
             vectorAction[0] * rotationSpeed, 
             0.0f
         );
+        */
         
-        //AddReward(-1f / MaxStep);
 
         // Removed for AI training
         // predict(); 
+
+
+ 
+        var action = Mathf.FloorToInt(vectorAction[0]);
+ 
+        switch (action)
+        {
+            case 1:
+                transform.Rotate(Vector3.left * Time.deltaTime * rotationSpeed, Space.World);
+                break;
+            case 2:
+                transform.Rotate(Vector3.right * Time.deltaTime * rotationSpeed, Space.World);
+                break;
+            case 3:
+                transform.Rotate(Vector3.down * Time.deltaTime * rotationSpeed, Space.World);
+                break;
+            case 4:
+                transform.Rotate(Vector3.up * Time.deltaTime * rotationSpeed, Space.World);
+                break;
+            case 5:
+                shoot();
+                break;
+        }
+
+        AddReward(-1f / MaxStep);
     }
 
     public override void Heuristic(float[] actionsOut){
-        actionsOut[0] = Input.GetAxis("Horizontal");
+        /* actionsOut[0] = Input.GetAxisRaw("Horizontal");
         actionsOut[1] = Input.GetKey(KeyCode.Space) ? 1.0f : 0.0f;
-        actionsOut[2] = Input.GetAxis("Vertical");
+        actionsOut[2] = Input.GetAxisRaw("Vertical"); */
+
+        actionsOut[0] = 0;
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            actionsOut[0] = 4;
+        }
+        else if (Input.GetKey(KeyCode.UpArrow))
+        {
+            actionsOut[0] = 1;
+        }
+        else if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            actionsOut[0] = 3;
+        }
+        else if (Input.GetKey(KeyCode.DownArrow))
+        {
+            actionsOut[0] = 2;
+        }
+        else if (Input.GetKey(KeyCode.Space))
+        {
+            actionsOut[0] = 5;
+        }
     }
 
     public override void CollectObservations(VectorSensor sensor){
-        sensor.AddObservation(ShotIsReady);
         sensor.AddObservation(this.transform.rotation.z);
         sensor.AddObservation(this.transform.rotation.y);
         sensor.AddObservation(this.transform.rotation.x);
+        sensor.AddObservation(this.transform.position);
+        sensor.AddObservation(GameObject.FindWithTag("Goal").transform.position);
         sensor.AddObservation(GameObject.FindWithTag("Goal").transform.position - this.transform.position);
     }
     
