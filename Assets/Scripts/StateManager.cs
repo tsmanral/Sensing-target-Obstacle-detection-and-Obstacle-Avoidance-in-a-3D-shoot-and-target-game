@@ -26,6 +26,8 @@ public class StateManager : Singleton<StateManager>{
 
     public Shooter Agent;
 
+    //public Transform parent;
+
     int maxIterationsSpawn = 10;
 
     // Increment the score when ball touches the goal. 
@@ -56,7 +58,7 @@ public class StateManager : Singleton<StateManager>{
         // Removed for AI training
         // PredictionManager.instance.copyAllObstacles();
 
-        Agent.OnEnvironmentReset += Respawn;
+        //Agent.OnEnvironmentReset += Respawn;
     }
 
     // Monitor if the ball misses the goal.
@@ -71,11 +73,11 @@ public class StateManager : Singleton<StateManager>{
 
     // Destroy and Inititae a new random Goal every time we score.
     void onScore(int v){
-        Destroy(GameObject.FindWithTag("Goal"));
+        DestroyImmediate(GameObject.FindWithTag("Goal"));
         createNewCollectable();
     }
 
-    void movePlayer(){
+    public void movePlayer(){
         player.transform.position = calculatePositionInVolume(playerVolume);
     }
 
@@ -158,7 +160,7 @@ public class StateManager : Singleton<StateManager>{
         currentShoots.val = 0;
         currentBounce.val = 0;
         currentObstacle.val = 0;
-        movePlayer();
+        //movePlayer();
         createObstacles();
     }
 }

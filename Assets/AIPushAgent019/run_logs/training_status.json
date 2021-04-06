@@ -1,0 +1,29 @@
+{
+    "Shooter": {
+        "checkpoints": [
+            {
+                "steps": 499988,
+                "file_path": "results\\AIPushAgent019\\Shooter\\Shooter-499988.nn",
+                "reward": 0.9551379416033275,
+                "creation_time": 1617648630.7102559
+            },
+            {
+                "steps": 500012,
+                "file_path": "results\\AIPushAgent019\\Shooter\\Shooter-500012.nn",
+                "reward": 0.9543174852024643,
+                "creation_time": 1617648630.9592519
+            }
+        ],
+        "final_checkpoint": {
+            "steps": 500012,
+            "file_path": "results\\AIPushAgent019\\Shooter.nn",
+            "reward": 0.9543174852024643,
+            "creation_time": 1617648630.9592519
+        }
+    },
+    "metadata": {
+        "stats_format_version": "0.1.0",
+        "mlagents_version": "0.20.0",
+        "tensorflow_version": "2.3.1"
+    }
+}

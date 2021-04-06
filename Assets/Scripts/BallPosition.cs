@@ -10,8 +10,8 @@ public class BallPosition : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Physics.sleepThreshold = 0.5f;
-        Invoke("posUpdate", 6);
+        Physics.sleepThreshold = 0.2f;
+        Invoke("posUpdate", 3);
     }
 
     // Update is called once per frame
@@ -22,7 +22,6 @@ public class BallPosition : MonoBehaviour
         if(this.GetComponent<Rigidbody>().velocity == Vector3.zero && this.GetComponent<Rigidbody>().angularVelocity.magnitude == 0)
         {
             finalPos = this.transform.position;
-            Debug.Log(this.transform.position);
         }
     }
 
