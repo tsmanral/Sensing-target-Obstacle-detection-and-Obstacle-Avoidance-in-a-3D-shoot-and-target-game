@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-//using UnityEngine.SceneManagement;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 
@@ -26,6 +26,10 @@ public class StateManager : Singleton<StateManager>{
 
     public Shooter Agent;
 
+    Scene currentScene;
+
+    PhysicsScene currentPhysicsScene;
+
     //public Transform parent;
 
     int maxIterationsSpawn = 10;
@@ -38,6 +42,10 @@ public class StateManager : Singleton<StateManager>{
     // Increment the number of time player threw the ball. 
     public void shoot(){
         currentShoots.val ++;
+        if(currentShoots.val > currentScore.val)
+        {
+            currentMiss.val = currentShoots.val - currentScore.val;
+        }
     }
 
     public void addBounces() {
@@ -49,41 +57,45 @@ public class StateManager : Singleton<StateManager>{
     }
 
     void Start(){
+        Physics.autoSimulation = true;
+        //currentScene = SceneManager.GetActiveScene();
+        //currentPhysicsScene = currentScene.GetPhysicsScene();
+        
         currentScore.propertyUpdated += onScore;
 
         movePlayer();
         createObstacles();
         createNewCollectable();
 
-        // Removed for AI training
-        // PredictionManager.instance.copyAllObstacles();
 
         //Agent.OnEnvironmentReset += Respawn;
     }
 
     // Monitor if the ball misses the goal.
     // TODO: Change it so it doesn't go into infinity loop.
-    void Update()
+    void FixedUpdate()
     {
-        if(currentShoots.val > currentScore.val)
-        {
-            currentMiss.val = currentShoots.val - currentScore.val;
+        /*
+        if (currentPhysicsScene.IsValid()){
+            currentPhysicsScene.Simulate(Time.fixedDeltaTime);
         }
+        */
     }
 
     // Destroy and Inititae a new random Goal every time we score.
     void onScore(int v){
-        DestroyImmediate(GameObject.FindWithTag("Goal"));
+        Destroy(GameObject.FindWithTag("Goal"));
         createNewCollectable();
     }
 
     public void movePlayer(){
-        player.transform.position = calculatePositionInVolume(playerVolume);
+        this.transform.parent.transform.Find("FirePosition").transform.position = calculatePositionInVolume(playerVolume);
     }
 
     // Initiate a new Goal.
     void createNewCollectable(){
         GameObject c = Instantiate(collectablePrefab);
+        c.transform.SetParent(this.transform.parent);
 
         bool empty = false;
         int iteration = 0;
@@ -130,6 +142,9 @@ public class StateManager : Singleton<StateManager>{
             o.transform.SetParent(obstaclesRoot.transform);
             currentObs ++;
         }
+        
+        // Removed for AI training
+        // PredictionManager.instance.copyAllObstacles();
     }
 
     // Calculate a random position inside the Gizmos

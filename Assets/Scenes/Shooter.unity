@@ -1332,7 +1332,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1705769105
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1489,7 +1489,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1759004323}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 81f519cd8c66f7142a01cfe36486b16c, type: 3}
   m_Name: 
@@ -1733,7 +1733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1793252091
 Transform:
   m_ObjectHideFlags: 0
@@ -1774,7 +1774,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1793252090}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 76c392e42b5098c458856cdf6ecaaaa1, type: 3}
   m_Name: 
@@ -1887,7 +1887,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8212974821391853890}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -3.3837564, y: -2.826724, z: -2.2819557}
+  m_LocalPosition: {x: -0.12638429, y: -2.6973572, z: -2.0774355}
   m_LocalScale: {x: 2, y: 2, z: 2}
   m_Children:
   - {fileID: 78106209}
@@ -1909,6 +1909,7 @@ GameObject:
   - component: {fileID: 8212974821391853896}
   - component: {fileID: 8212974821391853894}
   - component: {fileID: 8212974821391853897}
+  - component: {fileID: 8212974821391853895}
   m_Layer: 2
   m_Name: FirePosition
   m_TagString: Untagged
@@ -1931,11 +1932,11 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 500000
+  MaxStep: 200000
   ballPrefab: {fileID: 2541648754435977243, guid: 0a58b7fbc40200a489c65aa8dfda60a3,
     type: 3}
-  power: 200
-  rotationSpeed: 30
+  power: 1000
+  rotationSpeed: 3
 --- !u!65 &8212974821391853892
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1962,7 +1963,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_BrainParameters:
-    VectorObservationSize: 0
+    VectorObservationSize: 12
     NumStackedVectorObservations: 1
     VectorActionSize: 03000000
     VectorActionDescriptions: []
@@ -2004,6 +2005,22 @@ MonoBehaviour:
   rayMissColor: {r: 1, g: 1, b: 1, a: 1}
   m_StartVerticalOffset: 0
   m_EndVerticalOffset: 0
+--- !u!114 &8212974821391853895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8212974821391853890}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f2902496c0120472b90269f94a0aec7e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Record: 0
+  NumStepsToRecord: 0
+  DemonstrationName: Demo
+  DemonstrationDirectory: C:\Users\tribh\GUI-Ball-In-a-Cube\GUI-Ball-In-a-Cube\Assets\Demonstrations
 --- !u!114 &8212974821391853896
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2019,7 +2036,7 @@ MonoBehaviour:
   agentParameters:
     maxStep: 0
   hasUpgradedFromAgentParameters: 1
-  MaxStep: 500000
+  MaxStep: 200000
 --- !u!114 &8212974821391853897
 MonoBehaviour:
   m_ObjectHideFlags: 0

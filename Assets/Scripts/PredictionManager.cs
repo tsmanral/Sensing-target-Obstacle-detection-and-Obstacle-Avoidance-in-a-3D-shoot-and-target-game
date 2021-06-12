@@ -21,6 +21,8 @@ public class PredictionManager : Singleton<PredictionManager>{
 
 
     void Start(){
+        /*
+        
         Physics.autoSimulation = false;
 
         currentScene = SceneManager.GetActiveScene();
@@ -32,12 +34,18 @@ public class PredictionManager : Singleton<PredictionManager>{
 
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.material = mat1;
+        */
+        
     }
 
     void FixedUpdate(){
+        /*
+        
         if (currentPhysicsScene.IsValid()){
             currentPhysicsScene.Simulate(Time.fixedDeltaTime);
         }
+        */
+        
     }
 
     public void copyAllObstacles(){
